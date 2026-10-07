@@ -131,7 +131,7 @@
 
                 <button
                     class="view-notes-btn"
-                    onclick="showNotes('C Programming')"
+                    onclick="openCProgrammingPPT()"
                 >
                     View Notes
                 </button>
@@ -322,12 +322,29 @@
 
 
 
+    // C PROGRAMMING PPT LINK
+
+    const cProgrammingPPT =
+        "https://github.com/patel1983devansh-ux/gla-notes-hub-/raw/refs/heads/main/DataTypes_in_C%20%5BRepaired%5D%20(2).pptx";
+
+
+
+    // OPEN C PROGRAMMING PPT
+
+    window.openCProgrammingPPT = function() {
+
+        window.open(
+            cProgrammingPPT,
+            "_blank"
+        );
+
+    };
+
+
+
     // FIREBASE DOCUMENT IDs
 
     const subjectIds = {
-
-        "C Programming":
-            "c_programming",
 
         "Engineering Mathematics":
             "engineering_mathematics",
@@ -345,7 +362,7 @@
 
 
 
-    // SHOW NOTES
+    // SHOW FIREBASE NOTES
 
     window.showNotes = async function(subject) {
 
@@ -366,13 +383,9 @@
             document.getElementById("notesBox");
 
 
-        // TITLE
-
         title.innerText =
             "📚 " + subject;
 
-
-        // OPEN POPUP
 
         overlay.style.display =
             "block";
@@ -382,8 +395,6 @@
             "block";
 
 
-        // LOADING MESSAGE
-
         text.innerText =
             "⏳ Firebase se notes load ho rahe hain...";
 
@@ -391,13 +402,9 @@
         try {
 
 
-            // GET DOCUMENT ID
-
             const documentId =
                 subjectIds[subject];
 
-
-            // CHECK DOCUMENT ID
 
             if (!documentId) {
 
@@ -409,8 +416,6 @@
             }
 
 
-            // FIRESTORE DOCUMENT
-
             const noteRef =
                 doc(
                     db,
@@ -419,13 +424,9 @@
                 );
 
 
-            // GET DATA
-
             const noteSnap =
                 await getDoc(noteRef);
 
-
-            // CHECK DATA
 
             if (noteSnap.exists()) {
 
@@ -433,8 +434,6 @@
                 const data =
                     noteSnap.data();
 
-
-                // NOTES FIELD
 
                 if (data.notes) {
 
@@ -558,5 +557,3 @@
 
 </html>
 ```
-
-
