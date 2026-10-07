@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+}
+
+/* Header */
+header {
+    background: #123c69;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+}
+
+header h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 17px;
+}
+
+/* Main */
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 35px 20px;
+}
+
+.hero h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Search */
+#searchBox {
+    width: 80%;
+    max-width: 600px;
+    padding: 15px 20px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Subjects */
+.subjects h2 {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 28px;
+}
+
+.subject-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Cards */
+.subject-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.subject-card:hover {
+    transform: translateY(-6px);
+}
+
+.subject-card h3 {
+    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+.subject-card p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Button */
+button {
+    background: #123c69;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0b2948;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    background: #123c69;
+    color: white;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/* Mobile */
+@media (max-width: 800px) {
+    .subject-container {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 30px;
+    }
+
+    #searchBox {
+        width: 100%;
+    }
+}

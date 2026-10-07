@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - GLA Notes Hub</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>👑 GLA Notes Hub</h1>
+    <p>Admin Dashboard</p>
+</header>
+
+<main>
+
+    <section class="hero">
+        <h2>📚 Add Today's Classes</h2>
+        <p>Select the date and subjects that were taught today.</p>
+    </section>
+
+    <section class="subject-card">
+
+        <label><b>📅 Select Date</b></label>
+        <br><br>
+
+        <input type="date" id="classDate">
+
+        <br><br>
+
+        <h3>Select Today's Subjects</h3>
+
+        <div class="admin-subjects">
+
+            <label>
+                <input type="checkbox" value="C Programming">
+                💻 C Programming
+            </label>
+
+            <label>
+                <input type="checkbox" value="Engineering Mathematics">
+                🔢 Engineering Mathematics
+            </label>
+
+            <label>
+                <input type="checkbox" value="Digital Electronics">
+                ⚡ Digital Electronics
+            </label>
+
+            <label>
+                <input type="checkbox" value="Chemistry">
+                🧪 Chemistry
+            </label>
+
+            <label>
+                <input type="checkbox" value="Data Science">
+                📊 Data Science
+            </label>
+
+            <label>
+                <input type="checkbox" value="Big Data">
+                🌐 Big Data
+            </label>
+
+        </div>
+
+        <br>
+
+        <button onclick="showSelectedSubjects()">
+            Continue →
+        </button>
+
+    </section>
+
+    <div id="selectedSubjects"></div>
+
+</main>
+
+<footer>
+    <p>© 2026 GLA Notes Hub • Admin Panel</p>
+</footer>
+
+<script>
+
+function showSelectedSubjects() {
+
+    const date = document.getElementById("classDate").value;
+
+    const selected = document.querySelectorAll(
+        '.admin-subjects input[type="checkbox"]:checked'
+    );
+
+    if (!date) {
+        alert("Please select a date.");
+        return;
+    }
+
+    if (selected.length === 0) {
+        alert("Please select at least one subject.");
+        return;
+    }
+
+    let output = `
+        <section class="subject-card">
+        <h2>📝 Add Notes</h2>
+        <p>Date: ${date}</p>
+    `;
+
+    selected.forEach(function(subject) {
+
+        output += `
+            <div style="margin-top:25px; padding:20px; background:#f4f7fb; border-radius:12px;">
+                
+                <h3>${subject.value}</h3>
+
+                <label>📖 Today's Topic</label>
+                <br><br>
+
+                <input 
+                    type="text"
+                    placeholder="Enter topic"
+                    style="padding:12px; width:90%;"
+                >
+
+                <br><br>
+
+                <label>📎 Select PPT / PDF</label>
+                <br><br>
+
+                <input type="file" accept=".pdf,.ppt,.pptx">
+
+            </div>
+        `;
+    });
+
+    output += `
+        <br>
+        <button onclick="saveClasses()">
+            💾 Save Today's Classes
+        </button>
+        </section>
+    `;
+
+    document.getElementById("selectedSubjects").innerHTML = output;
+}
+
+
+function saveClasses() {
+    alert("Classes saved! 🚀");
+}
+
+</script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCjTQRuA8xtwESu-zY3jxC24pZyA5Hja50",
+    authDomain: "gla-notes-hub.firebaseapp.com",
+    projectId: "gla-notes-hub",
+    storageBucket: "gla-notes-hub.firebasestorage.app",
+    messagingSenderId: "988828174289",
+    appId: "1:988828174289:web:b6f03f00ce3af8ae2702f0",
+    measurementId: "G-GQVVVHGB93"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+</body>
+</html>

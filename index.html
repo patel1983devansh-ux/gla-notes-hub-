@@ -1,0 +1,562 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GLA Notes Hub</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        #notesBox {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 550px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        #notesBox h2 {
+            margin-bottom: 15px;
+        }
+
+        #notesText {
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        #closeNotes {
+            margin-top: 20px;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #1976d2;
+            color: white;
+            cursor: pointer;
+        }
+
+        #closeNotes:hover {
+            background: #125ca3;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+        }
+
+        .view-notes-btn {
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>📚 GLA Notes Hub</h1>
+
+    <p>
+        B.Tech CSE • Class Notes & Study Material
+    </p>
+
+</header>
+
+
+<main>
+
+
+    <!-- HERO SECTION -->
+
+    <section class="hero">
+
+        <h2>
+            Welcome to GLA Notes Hub 👋
+        </h2>
+
+        <p>
+            Find all your PPTs, PDFs and study material in one place.
+        </p>
+
+        <input
+            type="text"
+            id="searchBox"
+            placeholder="🔍 Search notes..."
+        >
+
+    </section>
+
+
+
+    <!-- SUBJECTS -->
+
+    <section class="subjects">
+
+        <h2>📖 Subjects</h2>
+
+        <div class="subject-container">
+
+
+            <!-- C PROGRAMMING -->
+
+            <div class="subject-card">
+
+                <h3>💻 C Programming</h3>
+
+                <p>
+                    Programs, PPTs & Notes
+                </p>
+
+                <button
+                    class="view-notes-btn"
+                    onclick="showNotes('C Programming')"
+                >
+                    View Notes
+                </button>
+
+            </div>
+
+
+
+            <!-- ENGINEERING MATHEMATICS -->
+
+            <div class="subject-card">
+
+                <h3>🔢 Engineering Mathematics</h3>
+
+                <p>
+                    Calculus, Algebra & Notes
+                </p>
+
+                <button
+                    class="view-notes-btn"
+                    onclick="showNotes('Engineering Mathematics')"
+                >
+                    View Notes
+                </button>
+
+            </div>
+
+
+
+            <!-- DIGITAL ELECTRONICS -->
+
+            <div class="subject-card">
+
+                <h3>⚡ Digital Electronics</h3>
+
+                <p>
+                    Logic Gates, Boolean Algebra & PPTs
+                </p>
+
+                <button
+                    class="view-notes-btn"
+                    onclick="showNotes('Digital Electronics')"
+                >
+                    View Notes
+                </button>
+
+            </div>
+
+
+
+            <!-- CHEMISTRY -->
+
+            <div class="subject-card">
+
+                <h3>🧪 Chemistry</h3>
+
+                <p>
+                    Units, PPTs & Assignments
+                </p>
+
+                <button
+                    class="view-notes-btn"
+                    onclick="showNotes('Chemistry')"
+                >
+                    View Notes
+                </button>
+
+            </div>
+
+
+
+            <!-- EMERGING TECHNOLOGY -->
+
+            <div class="subject-card">
+
+                <h3>🚀 Emerging Technology</h3>
+
+                <p>
+                    AI, Machine Learning & New Technologies
+                </p>
+
+                <button
+                    class="view-notes-btn"
+                    onclick="showNotes('Emerging Technology')"
+                >
+                    View Notes
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- OVERLAY -->
+
+<div
+    id="overlay"
+    onclick="closeNotes()">
+</div>
+
+
+
+<!-- NOTES POPUP -->
+
+<div id="notesBox">
+
+    <h2 id="notesTitle">
+        📚 Notes
+    </h2>
+
+    <p id="notesText">
+        Loading...
+    </p>
+
+    <button
+        id="closeNotes"
+        onclick="closeNotes()">
+        Close
+    </button>
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        © 2026 GLA Notes Hub • Made for B.Tech CSE Students ❤️
+    </p>
+
+</footer>
+
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+    import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+    import {
+        getFirestore,
+        doc,
+        getDoc
+    }
+    from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    // FIREBASE CONFIG
+
+    const firebaseConfig = {
+
+        apiKey: "AIzaSyCjTQRuA8xtwESu-zY3jxC24pZyA5Hja50",
+
+        authDomain: "gla-notes-hub.firebaseapp.com",
+
+        projectId: "gla-notes-hub",
+
+        storageBucket: "gla-notes-hub.firebasestorage.app",
+
+        messagingSenderId: "988828174289",
+
+        appId: "1:988828174289:web:b6f03f00ce3af8ae2702f0",
+
+        measurementId: "G-GQVVVHGB93"
+
+    };
+
+
+    // INITIALIZE FIREBASE
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const db =
+        getFirestore(app);
+
+
+
+    // FIREBASE DOCUMENT IDs
+
+    const subjectIds = {
+
+        "C Programming":
+            "c_programming",
+
+        "Engineering Mathematics":
+            "engineering_mathematics",
+
+        "Digital Electronics":
+            "digital_electronics",
+
+        "Chemistry":
+            "chemistry",
+
+        "Emerging Technology":
+            "emerging_technology"
+
+    };
+
+
+
+    // SHOW NOTES
+
+    window.showNotes = async function(subject) {
+
+
+        const title =
+            document.getElementById("notesTitle");
+
+
+        const text =
+            document.getElementById("notesText");
+
+
+        const overlay =
+            document.getElementById("overlay");
+
+
+        const box =
+            document.getElementById("notesBox");
+
+
+        // TITLE
+
+        title.innerText =
+            "📚 " + subject;
+
+
+        // OPEN POPUP
+
+        overlay.style.display =
+            "block";
+
+
+        box.style.display =
+            "block";
+
+
+        // LOADING MESSAGE
+
+        text.innerText =
+            "⏳ Firebase se notes load ho rahe hain...";
+
+
+        try {
+
+
+            // GET DOCUMENT ID
+
+            const documentId =
+                subjectIds[subject];
+
+
+            // CHECK DOCUMENT ID
+
+            if (!documentId) {
+
+                text.innerText =
+                    "❌ Subject ID nahi mila.";
+
+                return;
+
+            }
+
+
+            // FIRESTORE DOCUMENT
+
+            const noteRef =
+                doc(
+                    db,
+                    "notes",
+                    documentId
+                );
+
+
+            // GET DATA
+
+            const noteSnap =
+                await getDoc(noteRef);
+
+
+            // CHECK DATA
+
+            if (noteSnap.exists()) {
+
+
+                const data =
+                    noteSnap.data();
+
+
+                // NOTES FIELD
+
+                if (data.notes) {
+
+                    text.innerText =
+                        "📄 Notes:\n\n" +
+                        data.notes;
+
+                }
+
+                else {
+
+                    text.innerText =
+                        "📄 Is subject ke notes abhi upload nahi hue.";
+
+                }
+
+
+            }
+
+            else {
+
+                text.innerText =
+                    "❌ Firebase me ye subject nahi mila.";
+
+            }
+
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "Firebase Error:",
+                error
+            );
+
+
+            text.innerText =
+                "❌ Firebase Error:\n\n" +
+                error.message;
+
+        }
+
+    };
+
+
+
+    // CLOSE NOTES
+
+    window.closeNotes = function() {
+
+
+        document.getElementById(
+            "overlay"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "notesBox"
+        ).style.display = "none";
+
+    };
+
+
+
+    // SEARCH
+
+    const searchBox =
+        document.getElementById("searchBox");
+
+
+    const cards =
+        document.querySelectorAll(".subject-card");
+
+
+    searchBox.addEventListener(
+        "input",
+        function() {
+
+
+            const searchText =
+                searchBox.value.toLowerCase();
+
+
+            cards.forEach(
+                function(card) {
+
+
+                    const cardText =
+                        card.innerText.toLowerCase();
+
+
+                    if (
+                        cardText.includes(searchText)
+                    ) {
+
+                        card.style.display =
+                            "block";
+
+                    }
+
+                    else {
+
+                        card.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
+```
+
+

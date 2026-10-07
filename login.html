@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devansh Notes Hub - Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-box {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+
+        h1 {
+            color: #123c69;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #444;
+            font-size: 20px;
+            margin-bottom: 25px;
+        }
+
+        button {
+            width: 96%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #123c69;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0b2948;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .google-icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h1>📚 Devansh Notes Hub</h1>
+
+    <h2>🔐 Login with Google</h2>
+
+    <button id="googleLogin">
+        <span class="google-icon">🔵</span>
+        Continue with Google
+    </button>
+
+    <p id="message"></p>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCjTQRuA8xtwESu-zY3jxC24pZyA5Hja50",
+
+    authDomain: "gla-notes-hub.firebaseapp.com",
+
+    projectId: "gla-notes-hub",
+
+    storageBucket: "gla-notes-hub.firebasestorage.app",
+
+    messagingSenderId: "988828174289",
+
+    appId: "1:988828174289:web:b6f03f00ce3af8ae2702f0",
+
+    measurementId: "G-GQVVVHGB93"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const provider = new GoogleAuthProvider();
+
+
+const googleLoginButton =
+    document.getElementById("googleLogin");
+
+const message =
+    document.getElementById("message");
+
+
+googleLoginButton.addEventListener(
+    "click",
+    async function () {
+
+        try {
+
+            message.innerText =
+                "Opening Google Login... ⏳";
+
+            const result =
+                await signInWithPopup(
+                    auth,
+                    provider
+                );
+
+            const user = result.user;
+
+            message.innerText =
+                "Welcome " + user.displayName + "! 🎉";
+
+            setTimeout(function () {
+
+                window.location.href =
+                    "index.html";
+
+            }, 1000);
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            message.innerText =
+    "Login Error: " + error.code + " - " + error.message;
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
